@@ -1,10 +1,26 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import githubConfig from './config/github.config'
+import { GitRepository } from './modules/GitRepository/entities'
+import { GitRepositoriesModule } from './modules/GitRepository/git-repository.module'
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({ load: [githubConfig] }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT, 10),
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      entities: [GitRepository],
+      synchronize: true
+    }),
+    GitRepositoriesModule
+  ],
+  controllers: [],
+  providers: []
 })
 export class AppModule {}
