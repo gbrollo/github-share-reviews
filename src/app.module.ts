@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import githubConfig from './config/github.config'
-import { GitRepository } from './modules/GitRepository/entities'
-import { GitRepositoriesModule } from './modules/GitRepository/git-repository.module'
+import { GitRepository } from './modules/git-repository/entities'
+import { GitRepositoriesModule } from './modules/git-repository/git-repository.module'
 
 @Module({
   imports: [
